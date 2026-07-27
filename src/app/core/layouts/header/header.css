@@ -4,7 +4,16 @@ header {
     color: white;
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    padding-inline: 20px;
     font-size: 20px;
     font-weight: 600;
+    justify-content: space-between;
+}
+
+.logout-btn {
+    background: #d32f2f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
 }

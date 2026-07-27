@@ -1,1 +1,82 @@
-<p>login works!</p>
+<div class="login-container">
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-card">
+
+        <h2>Login</h2>
+
+        <div>
+
+            <label>Username</label>
+
+            <input type="text" formControlName="username">
+
+            @if(loginForm.controls.username.touched &&
+            loginForm.controls.username.invalid){
+
+            <small>
+
+                Username is required.
+
+            </small>
+
+            }
+
+        </div>
+
+        <div>
+
+            <label>Email</label>
+
+            <input type="email" formControlName="email">
+
+            @if(loginForm.controls.email.touched &&
+            loginForm.controls.email.invalid){
+
+            <small>
+
+                Enter a valid email.
+
+            </small>
+
+            }
+
+        </div>
+
+        <div>
+
+            <label>Password</label>
+
+            <input type="password" formControlName="passwordHash">
+
+            @if(loginForm.controls.passwordHash.touched &&
+            loginForm.controls.passwordHash.invalid){
+
+            <small>
+
+                Password is required.
+
+            </small>
+
+            }
+
+        </div>
+
+        @if(errorMessage){
+
+        <div class="error-box">
+
+            {{errorMessage}}
+
+        </p>
+
+        }
+
+        <button type="submit" [disabled]="isLoading">
+
+            {{ isLoading ? 'Signing In...' : 'Login' }}
+
+        </button>
+
+    </form>
+
+</div>

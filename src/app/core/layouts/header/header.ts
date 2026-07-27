@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { StorageService } from '../../services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,4 +9,12 @@ import { Component } from '@angular/core';
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  private storage = inject(StorageService)
+  private router = inject(Router)
+
+  logout(): void {
+    this.storage.logout()
+    this.router.navigate(['/login'])
+  }
+}
