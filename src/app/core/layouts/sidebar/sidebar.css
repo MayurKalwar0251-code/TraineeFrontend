@@ -1,0 +1,17 @@
+nav {
+    width: 250px;
+    background: #263238;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    padding: 18px;
+    cursor: pointer;
+}
+
+a:hover {
+    background: #37474f;
+}
