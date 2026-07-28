@@ -1,10 +1,5 @@
 <nav>
-
-    <a routerLink="dashboard">Dashboard</a>
-    <a >Trainees</a>
-    <a >Mentors</a>
-    <a >Learning Tasks</a>
-    <a >Assignments</a>
-    <a >Submissions</a>
-    <a >Reviews</a>
+    @for(item of menuItems; track item.route) {
+        <a [routerLink]="item.route" routerLinkActive="active"><span>{{item.icon}}</span> {{item.label}}</a>
+    }
 </nav>

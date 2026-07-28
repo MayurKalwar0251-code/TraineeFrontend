@@ -1,0 +1,61 @@
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:white;
+
+}
+
+th{
+
+    background:#1976d2;
+
+    color:white;
+
+    padding:12px;
+
+}
+
+td{
+
+    padding:12px;
+
+    border-bottom:1px solid #ddd;
+
+}
+
+button{
+
+    margin-right:8px;
+
+    padding:6px 12px;
+
+}
+
+.delete-btn{
+
+    background:#d32f2f;
+
+    color:white;
+
+}
+
+.loading{
+
+    text-align:center;
+
+    padding:40px;
+
+}
+
+.empty{
+
+    text-align:center;
+
+    padding:40px;
+
+    color:gray;
+
+}

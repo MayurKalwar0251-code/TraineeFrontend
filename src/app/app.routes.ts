@@ -3,6 +3,7 @@ import { LoginComponent } from './features/auth/login/login';
 import { DashboardComponent } from './features/dashboard/dashboard';
 import { MainLayoutComponent } from './core/layouts/main-layout/main-layout';
 import { authGuard } from './core/guards/auth-guard';
+import { TraineeListComponent } from './features/trainees/pages/trainee-list/trainee-list';
 
 export const routes: Routes = [
 
@@ -25,8 +26,19 @@ export const routes: Routes = [
     children: [
 
       {
+        path: '',
+        redirectTo: "dashboard",
+        pathMatch: 'full'
+      },
+
+      {
         path: 'dashboard',
         component: DashboardComponent
+      },
+
+      {
+        path: "trainees",
+    loadComponent: ()=> import('./features/trainees/pages/trainee-list/trainee-list').then(c=> c.TraineeListComponent)
       }
 
     ]
