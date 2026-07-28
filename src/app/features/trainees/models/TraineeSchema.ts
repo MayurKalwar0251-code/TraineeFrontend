@@ -1,13 +1,10 @@
-export interface Trainee {
+export interface TraineeSchema {
     firstName: string,
     lastName: string,
     email: string,
     techStack: string,
     status: string,
     createdDate: string,
-    id: number
     updatedDate: string,
-    items: [],
-    totalPages: number
 }
 

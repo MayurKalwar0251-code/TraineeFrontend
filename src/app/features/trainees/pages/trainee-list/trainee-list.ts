@@ -5,10 +5,14 @@ import { Trainee } from '../../models/trainee';
 import { DataTableComponent } from '../../../../shared/components/data-table/data-table';
 import { TableColumn } from '../../../../shared/models/table-column';
 import { FormsModule } from '@angular/forms';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { ModalComponent } from '../../../../shared/components/modal/modal';
+import { TraineeFormComponent } from '../../components/trainee-form/trainee-form';
+import { CreateTraineeRequest } from '../../models/create-trainee-request';
 
 @Component({
   selector: 'app-trainee-list',
-  imports: [CommonModule, DataTableComponent, FormsModule],
+  imports: [CommonModule, DataTableComponent, FormsModule, PaginationComponent, ModalComponent, TraineeFormComponent],
   standalone: true,
   templateUrl: './trainee-list.html',
   styleUrl: './trainee-list.css',
@@ -16,7 +20,13 @@ import { FormsModule } from '@angular/forms';
 export class TraineeListComponent implements OnInit {
   private traineeService = inject(TraineeService)
   private zone = inject(NgZone)
-  private cdr = inject(ChangeDetectorRef)
+  private searchTimeout: any
+
+  showForm = signal(false)
+
+  isSaving = signal(false)
+
+  selectedTrainee = signal<Trainee | null>(null)
 
   trainees = signal<Trainee[]>([])
 
@@ -59,6 +69,14 @@ export class TraineeListComponent implements OnInit {
     },
   ]
 
+  onSearch() {
+    clearTimeout(this.searchTimeout)
+    this.searchTimeout = setTimeout(() => {
+      this.pageNumber = 1
+      this.loadTrainees()
+    }, 300)
+  }
+
   ngOnInit(): void {
     this.loadTrainees()
   }
@@ -92,11 +110,55 @@ export class TraineeListComponent implements OnInit {
     console.log("LOADING : ", this.loading)
   }
 
+  openCreate() {
+    this.selectedTrainee.set(null)
+    this.showForm.set(true)
+  }
+
   onEdit(id: number) {
     console.log("edit ", id)
+    const trainee = this.trainees().find(x => x.id === id)
+    console.log("Trainee : ", trainee)
+    if (!trainee) return
+    this.selectedTrainee.set(trainee)
+    this.showForm.set(true)
+  }
+
+  closeForm() {
+    this.showForm.set(false)
+    this.selectedTrainee.set(null)
+  }
+
+  saveTrainee(data: CreateTraineeRequest) {
+    const selected = this.selectedTrainee()
+
+    this.isSaving.set(true)
+    if (selected) {
+      this.traineeService.update(selected.id, {
+        ...data,
+        id: selected.id
+      }).subscribe(() => {
+        this.closeForm()
+        this.loadTrainees()
+      })
+    } else {
+      this.traineeService.create(data).subscribe(() => {
+        this.closeForm()
+        this.loadTrainees()
+      })
+    }
+    this.isSaving.set(false)
   }
 
   onDelete(id: number) {
     console.log("delete ", id);
+    this.traineeService.delete(id).subscribe(()=>{
+      this.loadTrainees()
+    })
+  }
+
+  changePage(page: number) {
+    this.pageNumber = page
+    this.loadTrainees()
   }
 }

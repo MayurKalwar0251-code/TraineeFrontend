@@ -1,6 +1,6 @@
-<div class="toolbar"> 
+<div class="toolbar">
     <!-- Ensure 'Search' matches the exact case of the variable in your component.ts -->
-    <input type="text" placeholder="Search ..." [(ngModel)]="search" (keyup)="loadTrainees()">
+    <input type="text" placeholder="Search ..." [(ngModel)]="search" (input)="onSearch()">
 
     <button type="button">
         Add Trainee
@@ -8,10 +8,15 @@
 </div>
 
 <!-- Move all attributes and bindings inside the opening tag -->
-<app-data-table
-    [columns]="columns"
-    [data]="trainees()"
-    [loading]="loading()"
-    (edit)="onEdit($event)"
+<app-data-table [columns]="columns" [data]="trainees()" [loading]="loading()" (edit)="onEdit($event)"
     (delete)="onDelete($event)">
 </app-data-table>
+
+<app-pagination [pageNumber]="pageNumber" [totalPages]="totalPages" [totalCount]="totalCount"
+    (pageChanged)="changePage($event)">
+</app-pagination>
+
+<app-modal [visible]="showForm()" [title]="selectedTrainee() ? 'Edit Trainee' : 'Create Trainee'" (close)="closeForm()">
+    <app-trainee-form [isSaving]="isSaving()" [trainee]="selectedTrainee() ?? undefined" (save)="saveTrainee($event)" (cancel)="closeForm()">
+    </app-trainee-form>
+</app-modal>

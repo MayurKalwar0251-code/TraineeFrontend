@@ -1,1 +1,18 @@
-<p>pagination works!</p>
+<div class="pagination">
+    <button (click)="previous()" [disabled]="pageNumber === 1">
+        Previous
+    </button>
+
+    <span>
+        Page {{pageNumber}} of {{totalPages}}
+    </span>
+    
+    <button (click)="next()" [disabled]="pageNumber === totalPages">
+        Next
+    </button>
+
+</div>
+
+<div class="count">
+    Total Records : {{totalCount}}
+</div>

@@ -26,19 +26,21 @@
 
             @for(column of columns; track column.key){
 
-                <th>
+            <th>
 
-                    {{column.header}}
+                {{column.header}}
 
-                </th>
+            </th>
 
             }
 
+            @if(showActions) {
             <th>
 
                 Actions
 
             </th>
+            }
 
         </tr>
 
@@ -48,39 +50,37 @@
 
         @for(item of data; track item.id){
 
-            <tr>
+        <tr>
 
-                @for(column of columns; track column.key){
+            @for(column of columns; track column.key){
 
-                    <td>
+            <td>
 
-                        {{item[column.key]}}
+                {{item[column.key]}}
 
-                    </td>
+            </td>
 
-                }
+            }
 
-                <td>
+            @if(showActions) {
+            <td>
 
-                    <button
-                        (click)="edit.emit(item.id)">
+                <button (click)="edit.emit(item.id)">
 
-                        Edit
+                    Edit
 
-                    </button>
+                </button>
 
-                    <button
-                        class="delete-btn"
-                        (click)="delete.emit(item.id)">
+                <button class="delete-btn" (click)="delete.emit(item.id)">
 
-                        Delete
+                    Delete
 
-                    </button>
+                </button>
 
-                </td>
-
-            </tr>
-
+            </td>
+            }
+        </tr>
+        
         }
 
     </tbody>

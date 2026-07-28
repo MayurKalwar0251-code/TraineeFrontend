@@ -1,0 +1,64 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-grid">
+        <div class="form-group">
+
+            <label>
+                First Name
+            </label>
+
+            <input formControlName="firstName">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                Last Name
+            </label>
+        </div>
+
+        <div class="form-group full-width">
+            <input formControlName="lastName">
+
+            <label>
+
+                Email
+            </label>
+        </div>
+
+        <div class="form-group">
+
+            <input formControlName="email">
+
+            <label>
+                Tech Stack
+            </label>
+        </div>
+
+        <div class="form-group">
+
+            <input formControlName="techStack">
+
+            <label>
+                Status
+            </label>
+        </div>
+
+        <div class="form-group">
+
+            <select formControlName="status">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+        </div>
+
+
+
+    </div>
+
+    <div class="footer">
+        <button type="button" class="secondary" (click)="cancel.emit()">Cancel</button>
+        <button type="submit" [disabled]="isSaving" class="primary">{{ isSaving ? 'Saving...' : 'Save'}}</button>
+    </div>
+
+</form>

@@ -1,0 +1,14 @@
+@if(visible) {
+    <div class="backdrop" (click)="close.emit()">
+        <div class="modal" (click)="$event.stopPropagation()">
+            <div class="header">
+                <h2>{{title}}</h2>
+
+                <button class="close-btn" (click)="close.emit()">X</button>
+            </div>
+            <div class="body">
+                <ng-content></ng-content>
+            </div>
+        </div>
+    </div>
+}

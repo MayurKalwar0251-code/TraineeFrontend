@@ -20,6 +20,9 @@ export class DataTableComponent {
   @Input()
   loading = false
 
+  @Input()
+  showActions = true
+
   @Output()
   edit = new EventEmitter<number>()
 
