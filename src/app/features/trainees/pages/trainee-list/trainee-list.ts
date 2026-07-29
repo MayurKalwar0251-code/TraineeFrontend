@@ -85,7 +85,6 @@ export class TraineeListComponent implements OnInit {
     this.loading.set(true)
     this.traineeService.getAll(this.pageNumber, this.pageSize, this.search).subscribe({
       next: response => {
-        this.zone.run(() => {
           const page = response.data
           this.trainees.set(page.items)
           this.pageNumber = page.pageNumber
@@ -95,8 +94,6 @@ export class TraineeListComponent implements OnInit {
           this.hasPreviosPage = page.hasPreviosPage
           this.hasNextPage = page.hasNextPage
           this.loading.set(false)
-        })
-
       },
 
       error: () => {
@@ -121,6 +118,11 @@ export class TraineeListComponent implements OnInit {
     console.log("Trainee : ", trainee)
     if (!trainee) return
     this.selectedTrainee.set(trainee)
+    this.showForm.set(true)
+  }
+
+  createTrainee() {
+    console.log("Create trainee btn clicked");
     this.showForm.set(true)
   }
 

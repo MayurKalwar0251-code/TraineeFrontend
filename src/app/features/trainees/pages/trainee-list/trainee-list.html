@@ -2,7 +2,7 @@
     <!-- Ensure 'Search' matches the exact case of the variable in your component.ts -->
     <input type="text" placeholder="Search ..." [(ngModel)]="search" (input)="onSearch()">
 
-    <button type="button">
+    <button type="button" (click)="createTrainee()">
         Add Trainee
     </button>
 </div>
