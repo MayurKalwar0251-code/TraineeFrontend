@@ -13,3 +13,9 @@
     <app-learning-task-form [isSaving]="isSaving()" [learningTask]="selectedLearningTask() ?? undefined" (save)="saveLearningTask($event)" (cancel)="closeForm()">
     </app-learning-task-form>
 </app-modal>
+
+<app-modal [visible]="showAssignmentDialog()" title="Assign Learning Task" (close)="closeAssignmentDialog()">
+    <app-assignment-dialog [learningTask]="selectedLearningTask() ?? undefined" (save)="saveAssignment($event)" (cancel)="closeAssignmentDialog()">
+        
+    </app-assignment-dialog>
+</app-modal>

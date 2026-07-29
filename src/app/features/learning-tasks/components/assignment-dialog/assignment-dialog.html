@@ -1,0 +1,105 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <div class="form-grid">
+
+    <!-- Learning Task -->
+    <div class="form-group full-width">
+      <label>Learning Task</label>
+      <input [value]="learningTask?.title" readonly />
+    </div>
+
+    <!-- Trainee -->
+    <div class="form-group search-group" [class.open]="showTraineeDropdown">
+
+      <label>Trainee</label>
+
+      <input type="text" placeholder="Search trainee..." formControlName="traineeSearch" (focus)="openTraineeDropdown()"
+        (blur)="closeTraineeDropdown()" />
+
+      @if(showTraineeDropdown){
+
+      <div class="search-results">
+
+        @for(item of filteredTrainees(); track item.id){
+
+        <div class="result" (click)="selectTrainee(item)">
+          {{item.firstName}} {{item.lastName}}
+        </div>
+        }
+        @if(filteredTrainees().length === 0){
+        <div class="no-result">
+          No trainee found
+        </div>
+        }
+      </div>
+      }
+
+    </div>
+
+    <!-- Mentor -->
+
+    <div class="form-group search-group" [class.open]="showMentorDropdown">
+
+      <label>Mentor</label>
+
+      <input type="text" placeholder="Search mentor..." formControlName="mentorSearch" (focus)="openMentorDropdown()"
+        (blur)="closeMentorDropdown()" />
+
+      @if(showMentorDropdown){
+      <div class="search-results">
+        @for(item of filteredMentors(); track item.id){
+        <div class="result" (click)="selectMentor(item)">
+          {{item.firstName}}
+          {{item.lastName}}
+        </div>
+        }
+        @if(filteredMentors().length === 0){
+        <div class="no-result">
+          No mentor found
+        </div>
+        }
+      </div>
+      }
+
+    </div>
+
+    <!-- Assigned Date -->
+
+    <div class="form-group">
+
+      <label>Assigned Date</label>
+
+      <input type="date" formControlName="assignedDate" readonly />
+
+    </div>
+
+    <!-- Remarks -->
+
+    <div class="form-group full-width">
+
+      <label>Remarks</label>
+
+      <textarea rows="4" formControlName="remarks" placeholder="Enter remarks...">
+      </textarea>
+
+    </div>
+
+  </div>
+
+  <div class="footer">
+
+    <button type="button" class="secondary" (click)="cancel.emit()">
+
+      Cancel
+
+    </button>
+
+    <button type="submit" class="primary">
+
+      Assign Task
+
+    </button>
+
+  </div>
+
+</form>

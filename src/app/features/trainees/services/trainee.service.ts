@@ -20,6 +20,11 @@ export class TraineeService {
         return data
     }
 
+    getAllNoQuery() {
+        const data =  this.api.get<ApiResponse<Trainee[]>>(`${this.url}`);
+        return data
+    }
+
     getById(id: string): Observable<ApiResponse<Trainee>> {
         return this.api.get<ApiResponse<Trainee>>(`${this.url}/${id}`);
     }

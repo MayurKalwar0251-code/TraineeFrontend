@@ -53,6 +53,15 @@ button{
     border-radius: 6px;
 }
 
+.assign-btn{
+    border: 1px solid black;
+    border-radius: 6px;
+}
+
+.assign-btn:hover{
+    background-color: greenyellow;
+}
+
 .loading{
 
     text-align:center;

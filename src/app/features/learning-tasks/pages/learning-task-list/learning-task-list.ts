@@ -9,22 +9,28 @@ import { LearningTask } from '../../models/learningTask';
 import { CreateLearningTask } from '../../models/create-learningTask';
 import { LearningFormComponent } from '../../components/learning-task-form/learning-task-form';
 import { TableAction } from '../../../../shared/models/table-action';
+import { AssignmentDialogComponent } from '../../components/assignment-dialog/assignment-dialog';
+import { AssignmentService } from '../../../assignments/services/assignment.service';
+import { CreateTaskAssignment } from '../../../assignments/models/createTaskAssignment';
 
 @Component({
   selector: 'app-learning-task-list',
-  imports: [CommonModule, DataTableComponent, FormsModule, ModalComponent, LearningFormComponent],
+  imports: [CommonModule, DataTableComponent, FormsModule, ModalComponent, LearningFormComponent, AssignmentDialogComponent],
   standalone: true,
   templateUrl: './learning-task-list.html',
   styleUrl: './learning-task-list.css',
 })
 export class LearningTaskListComponent {
   private learningTaskService = inject(LearningTaskService)
+  private taskAssignmentService = inject(AssignmentService)
 
   showForm = signal(false)
 
   isSaving = signal(false)
 
   selectedLearningTask = signal<LearningTask | null>(null)
+
+  showAssignmentDialog = signal(false)
 
   learningTasks = signal<LearningTask[]>([])
 
@@ -118,6 +124,25 @@ export class LearningTaskListComponent {
 
   openAssignDialog(learningTask: LearningTask) {
     console.log("Assign task dialog", learningTask)
+    this.selectedLearningTask.set(learningTask)
+    this.showAssignmentDialog.set(true)
+  }
+
+  closeAssignmentDialog(){
+    this.showAssignmentDialog.set(false)
+    this.selectedLearningTask.set(null)
+  }
+
+  saveAssignment(request: CreateTaskAssignment){
+    const data = {
+      ...request,
+      dueDate :  this.selectedLearningTask()?.dueDate ?? ""
+    }
+    console.log("SAving " ,data)
+    this.taskAssignmentService.create(data).subscribe(()=>{
+      this.loadLearningTasks()
+    })
+    this.closeAssignmentDialog()
   }
 
   onEdit(id: number) {
