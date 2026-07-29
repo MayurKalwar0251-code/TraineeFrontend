@@ -1,0 +1,16 @@
+<!-- Move all attributes and bindings inside the opening tag -->
+<app-data-table [columns]="columns" [data]="learningTasks()" [loading]="loading()" (edit)="onEdit($event)"
+    (delete)="onDelete($event)">
+</app-data-table>
+
+<!-- floating button for create trainee -->
+<div class="create-trainee-div">
+    <button class="create-btn" (click)="createLearningTask()"  >
+        +
+    </button>
+</div>
+
+<app-modal [visible]="showForm()" [title]="selectedLearningTask() ? 'Edit LearningTask' : 'Create LearningTask'" (close)="closeForm()">
+    <app-learning-task-form [isSaving]="isSaving()" [learningTask]="selectedLearningTask() ?? undefined" (save)="saveLearningTask($event)" (cancel)="closeForm()">
+    </app-learning-task-form>
+</app-modal>

@@ -30,7 +30,7 @@ export class SidebarComponent {
     {
       label: 'Learning Tasks',
       icon: '📊',
-      route: '/learning-tasks'
+      route: '/learning-task'
     },
     {
       label: 'Assignments',

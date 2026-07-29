@@ -44,6 +44,11 @@ export const routes: Routes = [
       {
         path: "mentors",
         loadComponent: () => import('./features/mentors/pages/mentor-list/mentor-list').then(c => c.MentorListComponent)
+      },
+
+      {
+        path: "learning-task",
+        loadComponent: () => import('./features/learning-tasks/pages/learning-task-list/learning-task-list').then(c => c.LearningTaskListComponent)
       }
 
     ]
