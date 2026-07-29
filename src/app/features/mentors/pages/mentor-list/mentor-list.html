@@ -1,0 +1,16 @@
+<!-- Move all attributes and bindings inside the opening tag -->
+<app-data-table [columns]="columns" [data]="mentors()" [loading]="loading()" (edit)="onEdit($event)"
+    (delete)="onDelete($event)">
+</app-data-table>
+
+<!-- floating button for create trainee -->
+<div class="create-trainee-div">
+    <button class="create-btn" (click)="createMentor()"  >
+        +
+    </button>
+</div>
+
+<app-modal [visible]="showForm()" [title]="selectedMentor() ? 'Edit Mentor' : 'Create Mentor'" (close)="closeForm()">
+    <app-mentor-form [isSaving]="isSaving()" [mentor]="selectedMentor() ?? undefined" (save)="saveMentor($event)" (cancel)="closeForm()">
+    </app-mentor-form>
+</app-modal>
