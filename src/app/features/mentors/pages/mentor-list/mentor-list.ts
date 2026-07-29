@@ -8,10 +8,11 @@ import { MentorService } from '../../services/mentor.service';
 import { TableColumn } from '../../../../shared/models/table-column';
 import { CreateMentorRequest } from '../../models/create-mentor-request';
 import { Mentor } from '../../models/mentor';
+import { TableAction } from '../../../../shared/models/table-action';
 
 @Component({
   selector: 'app-mentor-list',
-  imports: [CommonModule,DataTableComponent,FormsModule,ModalComponent,MentorFormComponent],
+  imports: [CommonModule, DataTableComponent, FormsModule, ModalComponent, MentorFormComponent],
   standalone: true,
   templateUrl: './mentor-list.html',
   styleUrl: './mentor-list.css',
@@ -53,6 +54,21 @@ export class MentorListComponent {
     },
   ]
 
+  actions: TableAction<Mentor>[] = [
+    {
+      label: "Edit",
+      icon: "✏️",
+      cssClass: "edit-btn",
+      onClick: (mentor) => this.openEdit(mentor)
+    },
+    {
+      label: "Delete",
+      icon: "🗑️",
+      cssClass: "delete-btn",
+      onClick: (mentor) => this.deleteTrainee(mentor)
+    },
+  ]
+
   ngOnInit(): void {
     this.loadMentors()
   }
@@ -61,9 +77,9 @@ export class MentorListComponent {
     this.loading.set(true)
     this.mentorService.getAll().subscribe({
       next: response => {
-          const page = response.data
-          this.mentors.set(page)
-          this.loading.set(false)
+        const page = response.data
+        this.mentors.set(page)
+        this.loading.set(false)
       },
 
       error: () => {
@@ -80,6 +96,19 @@ export class MentorListComponent {
   openCreate() {
     this.selectedMentor.set(null)
     this.showForm.set(true)
+  }
+
+  openEdit(mentor: Mentor) {
+    console.log("edit : ", mentor)
+    this.selectedMentor.set(mentor)
+    this.showForm.set(true)
+  }
+
+  deleteTrainee(mentor: Mentor) {
+    console.log("delete ", mentor);
+    this.mentorService.delete(mentor.id).subscribe(() => {
+      this.loadMentors()
+    })
   }
 
   onEdit(id: number) {
@@ -124,7 +153,7 @@ export class MentorListComponent {
 
   onDelete(id: number) {
     console.log("delete ", id);
-    this.mentorService.delete(id).subscribe(()=>{
+    this.mentorService.delete(id).subscribe(() => {
       this.loadMentors()
     })
   }

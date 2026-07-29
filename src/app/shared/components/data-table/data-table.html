@@ -65,17 +65,9 @@
             @if(showActions) {
             <td>
 
-                <button class="edit-btn" (click)="edit.emit(item.id)">
-
-                    Edit
-
-                </button>
-
-                <button class="delete-btn" (click)="delete.emit(item.id)">
-
-                    Delete
-
-                </button>
+                @for(action of actions; track action.label){
+                    <button [class]="action.cssClass" (click)="action.onClick(item)">{{action.label}} {{action.icon}}</button>
+                }
 
             </td>
             }

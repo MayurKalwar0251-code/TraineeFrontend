@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { TableColumn } from '../../models/table-column';
+import { TableAction } from '../../models/table-action';
 
 @Component({
   selector: 'app-data-table',
@@ -23,11 +24,8 @@ export class DataTableComponent {
   @Input()
   showActions = true
 
-  @Output()
-  edit = new EventEmitter<number>()
-
-  @Output()
-  delete = new EventEmitter<number>()
+  @Input()
+  actions: TableAction[] = []
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['loading']) {

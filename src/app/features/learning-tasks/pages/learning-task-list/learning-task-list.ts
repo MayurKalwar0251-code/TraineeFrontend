@@ -8,10 +8,11 @@ import { LearningTaskService } from '../../services/learning-task.service';
 import { LearningTask } from '../../models/learningTask';
 import { CreateLearningTask } from '../../models/create-learningTask';
 import { LearningFormComponent } from '../../components/learning-task-form/learning-task-form';
+import { TableAction } from '../../../../shared/models/table-action';
 
 @Component({
   selector: 'app-learning-task-list',
-  imports: [CommonModule,DataTableComponent,FormsModule,ModalComponent,LearningFormComponent],
+  imports: [CommonModule, DataTableComponent, FormsModule, ModalComponent, LearningFormComponent],
   standalone: true,
   templateUrl: './learning-task-list.html',
   styleUrl: './learning-task-list.css',
@@ -52,6 +53,27 @@ export class LearningTaskListComponent {
     },
   ]
 
+  actions: TableAction<LearningTask>[] = [
+    {
+      label: "Edit",
+      icon: "✏️",
+      cssClass: "edit-btn",
+      onClick: (learningTask) => this.openEdit(learningTask)
+    },
+    {
+      label: "Delete",
+      icon: "🗑️",
+      cssClass: "delete-btn",
+      onClick: (learningTask) => this.deleteTrainee(learningTask)
+    },
+    {
+      label: "Assign",
+      icon: "🗑️",
+      cssClass: "assign-btn",
+      onClick: (learningTask) => this.openAssignDialog(learningTask)
+    },
+  ]
+
   ngOnInit(): void {
     this.loadLearningTasks()
   }
@@ -60,9 +82,9 @@ export class LearningTaskListComponent {
     this.loading.set(true)
     this.learningTaskService.getAll().subscribe({
       next: response => {
-          const page = response.data
-          this.learningTasks.set(page)
-          this.loading.set(false)
+        const page = response.data
+        this.learningTasks.set(page)
+        this.loading.set(false)
       },
 
       error: () => {
@@ -79,6 +101,23 @@ export class LearningTaskListComponent {
   openCreate() {
     this.selectedLearningTask.set(null)
     this.showForm.set(true)
+  }
+
+  openEdit(learningTask: LearningTask) {
+    console.log("edit : ", learningTask)
+    this.selectedLearningTask.set(learningTask)
+    this.showForm.set(true)
+  }
+
+  deleteTrainee(learningTask: LearningTask) {
+    console.log("delete ", learningTask);
+    this.learningTaskService.delete(learningTask.id).subscribe(() => {
+      this.loadLearningTasks()
+    })
+  }
+
+  openAssignDialog(learningTask: LearningTask) {
+    console.log("Assign task dialog", learningTask)
   }
 
   onEdit(id: number) {
@@ -123,7 +162,7 @@ export class LearningTaskListComponent {
 
   onDelete(id: number) {
     console.log("delete ", id);
-    this.learningTaskService.delete(id).subscribe(()=>{
+    this.learningTaskService.delete(id).subscribe(() => {
       this.loadLearningTasks()
     })
   }

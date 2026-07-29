@@ -8,8 +8,7 @@
 </div>
 
 <!-- Move all attributes and bindings inside the opening tag -->
-<app-data-table [columns]="columns" [data]="trainees()" [loading]="loading()" (edit)="onEdit($event)"
-    (delete)="onDelete($event)">
+<app-data-table [columns]="columns" [data]="trainees()" [loading]="loading()" [actions]="actions">
 </app-data-table>
 
 <app-pagination [pageNumber]="pageNumber" [totalPages]="totalPages" [totalCount]="totalCount"

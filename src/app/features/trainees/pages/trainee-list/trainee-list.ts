@@ -9,6 +9,7 @@ import { PaginationComponent } from '../../../../shared/components/pagination/pa
 import { ModalComponent } from '../../../../shared/components/modal/modal';
 import { TraineeFormComponent } from '../../components/trainee-form/trainee-form';
 import { CreateTraineeRequest } from '../../models/create-trainee-request';
+import { TableAction } from '../../../../shared/models/table-action';
 
 @Component({
   selector: 'app-trainee-list',
@@ -69,6 +70,21 @@ export class TraineeListComponent implements OnInit {
     },
   ]
 
+  actions: TableAction<Trainee>[] = [
+    {
+      label: "Edit",
+      icon: "✏️",
+      cssClass: "edit-btn",
+      onClick: (trainee) => this.openEdit(trainee)
+    },
+    {
+      label: "Delete",
+      icon: "🗑️",
+      cssClass: "delete-btn",
+      onClick: (trainee) => this.deleteTrainee(trainee)
+    },
+  ]
+
   onSearch() {
     clearTimeout(this.searchTimeout)
     this.searchTimeout = setTimeout(() => {
@@ -85,15 +101,15 @@ export class TraineeListComponent implements OnInit {
     this.loading.set(true)
     this.traineeService.getAll(this.pageNumber, this.pageSize, this.search).subscribe({
       next: response => {
-          const page = response.data
-          this.trainees.set(page.items)
-          this.pageNumber = page.pageNumber
-          this.pageSize = page.pageSize
-          this.totalPages = page.totalPages
-          this.totalCount = page.totalCount
-          this.hasPreviosPage = page.hasPreviosPage
-          this.hasNextPage = page.hasNextPage
-          this.loading.set(false)
+        const page = response.data
+        this.trainees.set(page.items)
+        this.pageNumber = page.pageNumber
+        this.pageSize = page.pageSize
+        this.totalPages = page.totalPages
+        this.totalCount = page.totalCount
+        this.hasPreviosPage = page.hasPreviosPage
+        this.hasNextPage = page.hasNextPage
+        this.loading.set(false)
       },
 
       error: () => {
@@ -119,6 +135,19 @@ export class TraineeListComponent implements OnInit {
     if (!trainee) return
     this.selectedTrainee.set(trainee)
     this.showForm.set(true)
+  }
+
+  openEdit(trainee: Trainee) {
+    console.log("edit : ", trainee)
+    this.selectedTrainee.set(trainee)
+    this.showForm.set(true)
+  }
+
+  deleteTrainee(trainee: Trainee) {
+    console.log("delete ", trainee);
+    this.traineeService.delete(trainee.id).subscribe(() => {
+      this.loadTrainees()
+    })
   }
 
   createTrainee() {
@@ -154,7 +183,7 @@ export class TraineeListComponent implements OnInit {
 
   onDelete(id: number) {
     console.log("delete ", id);
-    this.traineeService.delete(id).subscribe(()=>{
+    this.traineeService.delete(id).subscribe(() => {
       this.loadTrainees()
     })
   }

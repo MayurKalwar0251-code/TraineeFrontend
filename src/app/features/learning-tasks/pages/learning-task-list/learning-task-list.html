@@ -1,6 +1,5 @@
 <!-- Move all attributes and bindings inside the opening tag -->
-<app-data-table [columns]="columns" [data]="learningTasks()" [loading]="loading()" (edit)="onEdit($event)"
-    (delete)="onDelete($event)">
+<app-data-table [columns]="columns" [data]="learningTasks()" [loading]="loading()" [actions]="actions">
 </app-data-table>
 
 <!-- floating button for create trainee -->
