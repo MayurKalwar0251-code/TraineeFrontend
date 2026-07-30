@@ -57,6 +57,10 @@ export class LearningTaskListComponent {
       key: 'dueDate',
       header: 'Due Date'
     },
+    {
+      key: 'noOfAssignedTrainee',
+      header: 'No Of Assigned Trainee'
+    }
   ]
 
   actions: TableAction<LearningTask>[] = [
