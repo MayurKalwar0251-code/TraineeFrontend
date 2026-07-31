@@ -1,0 +1,64 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-grid">
+        <div class="form-group">
+
+            <label>
+               Trainee Id
+            </label>
+
+            <input formControlName="traineeId">
+
+        </div>
+
+        <div class="form-group">
+            <label>
+                Mentor Id
+            </label>
+            <input formControlName="mentorId">
+        </div>
+
+        <div class="form-group">
+            <label>
+                Learning Task Id
+            </label>
+            <input formControlName="learningTaskId">
+        </div>
+        
+        <div class="form-group">
+            <label>
+                Status
+            </label>
+            <select formControlName="status">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>
+                Remarks
+            </label>
+            <input formControlName="remarks">
+        </div>
+
+        <div class="form-group">
+            <label>
+                Assigned Date
+            </label>
+            <input type="date" formControlName="assignedDate">
+        </div>
+
+        <div class="form-group">
+            <label>
+                Due Date
+            </label>
+            <input type="date" formControlName="dueDate">
+        </div>
+    </div>
+
+    <div class="footer">
+        <button type="button" class="secondary" (click)="cancel.emit()">Cancel</button>
+        <button type="submit" [disabled]="isSaving" class="primary">{{ isSaving ? 'Saving...' : 'Save'}}</button>
+    </div>
+
+</form>

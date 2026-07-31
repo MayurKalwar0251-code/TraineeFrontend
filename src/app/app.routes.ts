@@ -49,7 +49,12 @@ export const routes: Routes = [
       {
         path: "learning-task",
         loadComponent: () => import('./features/learning-tasks/pages/learning-task-list/learning-task-list').then(c => c.LearningTaskListComponent)
-      }
+      },
+
+      {
+        path: "assignments",
+        loadComponent: () => import('./features/assignments/pages/assignment-list/assignment-list').then(c => c.AssignmentListComponent)
+      },
 
     ]
   },

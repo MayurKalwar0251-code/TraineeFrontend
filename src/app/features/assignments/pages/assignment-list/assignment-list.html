@@ -1,0 +1,15 @@
+<!-- Move all attributes and bindings inside the opening tag -->
+<app-data-table [columns]="columns" [data]="taskAssignments()" [loading]="loading()" [actions]="actions">
+</app-data-table>
+
+<!-- floating button for create trainee -->
+<div class="create-trainee-div">
+    <button class="create-btn" (click)="openCreate()"  >
+        +
+    </button>
+</div>
+
+<app-modal [visible]="showForm()" [title]="selectedTaskAssignment() ? 'Edit Task Assignment' : 'Create Task Assignment'" (close)="closeForm()">
+    <app-assignment-form [isSaving]="isSaving()" [taskAssignment]="selectedTaskAssignment() ?? undefined" (save)="saveTaskAssignment($event)" (cancel)="closeForm()">
+    </app-assignment-form>
+</app-modal>
