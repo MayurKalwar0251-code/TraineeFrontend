@@ -31,7 +31,7 @@ export class AssignmentFormComponent implements OnChanges {
     mentorId: [null as number | null, Validators.required],
     learningTaskId: [null as number | null, Validators.required],
     status: ['', Validators.required],
-    remarks: ['', Validators.required],
+    remarks: [''],
     assignedDate: ['', Validators.required],
     dueDate: ['', Validators.required],
   });
@@ -57,7 +57,7 @@ export class AssignmentFormComponent implements OnChanges {
   }
 
   submit() {
-    console.log("Submit functions : ", this.taskAssignment)
+    console.log("Submit functions  1 : ", this.taskAssignment)
     if (this.form.invalid) {
       this.form.markAllAsTouched()
       return
