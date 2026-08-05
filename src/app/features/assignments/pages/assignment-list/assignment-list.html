@@ -13,3 +13,8 @@
     <app-assignment-form [isSaving]="isSaving()" [taskAssignment]="selectedTaskAssignment() ?? undefined" (save)="saveTaskAssignment($event)" (cancel)="closeForm()">
     </app-assignment-form>
 </app-modal>
+
+<app-modal [visible]="showSubmissionsDialog()" title="Manage Submissions" (close)="closeSubmissionDialog()" >
+    <app-submission-list [assignment]="selectedTaskAssignment()" (close)="closeSubmissionDialog()">
+    </app-submission-list>
+</app-modal>

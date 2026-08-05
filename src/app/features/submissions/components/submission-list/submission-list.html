@@ -1,0 +1,11 @@
+<div class="toolbar">
+    <button class="create-btn" (click)="openCreate()">+ Upload Submission</button>
+</div>
+
+<app-data-table [columns]="columns" [data]="submissions()" [loading]="loading()" [actions]="actions">
+</app-data-table>
+
+<app-modal [visible]="showForm()" title="Upload Submission" (close)="closeForm()">
+    <app-submission-form (save)="saveSubmissionForm($event)" (cancel)="closeForm()">
+    </app-submission-form>
+</app-modal>

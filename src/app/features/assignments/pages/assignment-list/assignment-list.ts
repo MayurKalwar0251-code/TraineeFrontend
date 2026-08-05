@@ -9,10 +9,11 @@ import { AssignmentService } from '../../services/assignment.service';
 import { TaskAssignment } from '../../models/taskAssignment';
 import { CreateTaskAssignment } from '../../models/createTaskAssignment';
 import { AssignmentFormComponent } from '../../components/assignment-form/assignment-form';
+import { SubmissionListComponent } from '../../../submissions/components/submission-list/submission-list';
 
 @Component({
   selector: 'app-assignment-list',
-  imports: [CommonModule, DataTableComponent, FormsModule, ModalComponent, AssignmentFormComponent],
+  imports: [CommonModule, DataTableComponent, FormsModule, ModalComponent, AssignmentFormComponent, SubmissionListComponent],
   standalone: true,
   templateUrl: './assignment-list.html',
   styleUrl: './assignment-list.css',
@@ -28,6 +29,8 @@ export class AssignmentListComponent {
   selectedTaskAssignment = signal<TaskAssignment | null>(null)
 
   taskAssignments = signal<TaskAssignment[]>([])
+
+  showSubmissionsDialog = signal(false)
 
   loading = signal(false)
 
@@ -70,10 +73,10 @@ export class AssignmentListComponent {
       onClick: (taskAssignment) => this.openEdit(taskAssignment)
     },
     {
-      label: "Delete",
-      icon: "🗑️",
-      cssClass: "delete-btn",
-      onClick: (taskAssignment) => this.deleteTrainee(taskAssignment)
+      label: "Submissions",
+      icon: "📑",
+      cssClass: "edit-btn",
+      onClick: (taskAssignment) => this.openSubmission(taskAssignment)
     },
   ]
 
@@ -102,11 +105,11 @@ export class AssignmentListComponent {
   }
 
   openCreate() {
-    console.log("DAAT A : ",this.selectedTaskAssignment())
+    console.log("DAAT A : ", this.selectedTaskAssignment())
     this.selectedTaskAssignment.set(null)
     this.showForm.set(true)
 
-    console.log("DAAT A : ",this.selectedTaskAssignment())
+    console.log("DAAT A : ", this.selectedTaskAssignment())
   }
 
   openEdit(taskAssignment: TaskAssignment) {
@@ -120,6 +123,16 @@ export class AssignmentListComponent {
     this.taskAssignmentService.delete(taskAssignment.id).subscribe(() => {
       this.loadTaskAssignments()
     })
+  }
+
+  openSubmission(taskAssignment: TaskAssignment) {
+    this.selectedTaskAssignment.set(taskAssignment)
+    this.showSubmissionsDialog.set(true)
+  }
+
+  closeSubmissionDialog() {
+    this.showSubmissionsDialog.set(false)
+    this.selectedTaskAssignment.set(null)
   }
 
   onEdit(id: number) {
