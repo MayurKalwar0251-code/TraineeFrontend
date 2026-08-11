@@ -5,6 +5,7 @@ import { Router } from '@angular/router'; // Fixed import path
 import { AuthService } from '../../../core/services/auth.service';
 import { StorageService } from '../../../core/services/storage.service';
 import { finalize } from 'rxjs';
+import { LoginService } from './services/LoginService';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ import { finalize } from 'rxjs';
 export class LoginComponent {
   private fb = inject(FormBuilder).nonNullable
   private authService = inject(AuthService)
+  private loginService = inject(LoginService)
   private storageService = inject(StorageService)
   private router = inject(Router)
 
@@ -39,7 +41,7 @@ export class LoginComponent {
     this.isLoading = true
     this.errorMessage = ""
 
-    this.authService.login(this.loginForm.getRawValue())
+    this.loginService.login(this.loginForm.getRawValue())
       .pipe(
         finalize(() => {
           this.isLoading = false
@@ -51,8 +53,7 @@ export class LoginComponent {
             this.errorMessage = response.message || "Login Failed"
             return
           }
-          this.storageService.setToken(response.data.token)
-          this.storageService.setUser(response.data.userDto)
+          this.authService.login(response.data.token,response.data.userDto)
           this.router.navigate(['/dashboard'])
         },
 

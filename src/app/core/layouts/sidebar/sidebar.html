@@ -1,5 +1,5 @@
 <nav>
-    @for(item of menuItems; track item.route) {
+    @for(item of menuItems(); track item.route) {
         <a [routerLink]="item.route" routerLinkActive="active"><span>{{item.icon}}</span> {{item.label}}</a>
     }
 </nav>

@@ -1,12 +1,12 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { StorageService } from '../services/storage.service';
+import { AuthService } from '../services/auth.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  const storage = inject(StorageService)
+  const authService = inject(AuthService)
   const router = inject(Router)
 
-  if (storage.isLoggedIn()) {
+  if (authService.isLoggedIn()) {
     return true
   }
   router.navigate(['/login'])

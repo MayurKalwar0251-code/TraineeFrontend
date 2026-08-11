@@ -31,6 +31,7 @@ export class MentorFormComponent implements OnInit {
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
     expertise: ['', Validators.required],
     status: ['', Validators.required],
   })

@@ -29,6 +29,7 @@ export class TraineeFormComponent implements OnInit {
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
     techStack: ['', Validators.required],
     status: ['', Validators.required],
   })

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { SidebarItem } from '../../../shared/models/sidebar-item';
+import { RoleService } from '../../services/role.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,8 +12,24 @@ import { SidebarItem } from '../../../shared/models/sidebar-item';
   styleUrl: './sidebar.css',
 })
 export class SidebarComponent {
-  menuItems: SidebarItem[] = [
-    {
+
+  roleService = inject(RoleService)
+
+  menuItems = computed(()=>{
+    switch (this.roleService.getRole()){
+      case 'Admin':
+        return this.adminMenu
+      case 'Mentor':
+        return this.mentorMenu
+      case 'Trainee':
+        return this.traineeMenu
+      default:
+        return []
+    }
+  }) 
+
+  adminMenu: SidebarItem[] = [
+   {
       label: 'Dashboard',
       icon: '📊',
       route: '/dashboard'
@@ -38,9 +55,50 @@ export class SidebarComponent {
       route: '/assignments'
     },
     {
-      label: 'Reviews',
+      label: 'Profile',
       icon: '📊',
-      route: '/reviews'
+      route: '/profile'
+    },
+  ]
+
+  mentorMenu: SidebarItem[] = [
+    {
+      label: 'Dashboard',
+      icon: '📊',
+      route: '/dashboard'
+    },
+    {
+      label: 'My Trainees',
+      icon: '📊',
+      route: '/trainees'
+    },
+    {
+      label: 'Assignments',
+      icon: '📊',
+      route: '/assignments'
+    },
+    {
+      label: 'Profile',
+      icon: '📊',
+      route: '/profile'
+    },
+  ]
+
+  traineeMenu: SidebarItem[] = [
+    {
+      label: 'Dashboard',
+      icon: '📊',
+      route: '/dashboard'
+    },
+    {
+      label: 'My Assignments',
+      icon: '📊',
+      route: '/assignments'
+    },
+    {
+      label: 'Profile',
+      icon: '📊',
+      route: '/profile'
     },
   ]
 }
